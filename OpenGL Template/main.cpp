@@ -7,10 +7,6 @@ using namespace std;
 
 void init(GLFWwindow* window) {}
 
-void display(GLFWwindow* window, double currentTime) {
-	glClearColor(1.0, 0.0, 0.0, 1.0);
-	glClear(GL_COLOR_BUFFER_BIT);
-}
 
 int main(void) {
 	if (!glfwInit()) {
@@ -28,7 +24,7 @@ int main(void) {
 	init(window);
 
 	while (!glfwWindowShouldClose(window)) {
-		display(window, glfwGetTime());
+		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
