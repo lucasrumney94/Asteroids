@@ -1,16 +1,18 @@
-#include "Types.cpp"
+#pragma once
+
+#include "Types.hpp"
 #include <queue>
 #include <array>
 #include <cassert>
 
-class EntityManager 
+class EntityManager
 {
 private:
 	std::queue<Entity> mAvailableEntities{};
 	std::array<Signature, MAX_ENTITIES> mSignatures{};
 	uint32_t mLivingEntityCount{};
 
-public : 
+public:
 	EntityManager() {
 		for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
 		{

@@ -1,4 +1,6 @@
-#include "Types.cpp"
+#pragma once
+
+#include "Types.hpp"
 #include <set>
 
 class System

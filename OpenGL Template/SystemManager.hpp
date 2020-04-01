@@ -1,11 +1,17 @@
-#include "System.cpp"
-#include "Types.cpp"
+#pragma once
+
+#include "System.hpp"
+#include "Types.hpp"
 #include <cassert>
 #include <memory>
 #include <unordered_map>
 
 class SystemManager
 {
+private:
+	std::unordered_map<const char*, Signature> mSignatures{};
+	std::unordered_map<const char*, std::shared_ptr<System>> mSystems{};
+
 public:
 	template<typename T>
 	std::shared_ptr<T> RegisterSystem()
@@ -58,8 +64,4 @@ public:
 			}
 		}
 	}
-
-private:
-	std::unordered_map<const char*, Signature> mSignatures{};
-	std::unordered_map<const char*, std::shared_ptr<System>> mSystems{};
 };

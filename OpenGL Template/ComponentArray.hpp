@@ -1,4 +1,6 @@
-#include "Types.cpp"
+#pragma once
+
+#include "Types.hpp"
 #include <array>
 #include <cassert>
 #include <unordered_map>

@@ -1,5 +1,7 @@
-#include "ComponentArray.cpp"
-#include "Types.cpp"
+#pragma once
+
+#include "ComponentArray.hpp"
+#include "Types.hpp"
 #include <any>
 #include <memory>
 #include <unordered_map>
@@ -10,6 +12,16 @@ private:
 	std::unordered_map<const char*, ComponentType> mComponentTypes{};
 	std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrays{};
 	ComponentType mNextComponentType{}; // TODO: {}?
+
+	template<typename T>
+	std::shared_ptr<ComponentArray<T>> GetComponentArray()
+	{
+		const char* typeName = typeid(T).name();
+
+		assert(mComponentTypes.find(typeName) != mComponentTypes.end() && "Component not registered before use.");
+
+		return std::static_pointer_cast<ComponentArray<T>>(mComponentArrays[typeName]);
+	}
 
 public:
 	template<typename T>
