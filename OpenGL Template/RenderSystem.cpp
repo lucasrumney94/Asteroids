@@ -68,6 +68,7 @@ void RenderSystem::Update()
 
 		glBindVertexArray(renderable.VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+		Utils::checkOpenGLError();
 	}
 }
 
@@ -94,6 +95,8 @@ void RenderSystem::SetupVertices()
 
 			glBindBuffer(GL_ARRAY_BUFFER, vbo);
 			glBufferData(GL_ARRAY_BUFFER, sizeof(renderable.vertexPositions), renderable.vertexPositions, GL_STATIC_DRAW);
+			glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+			glEnableVertexAttribArray(0);
 			glBindVertexArray(0);
 		}
 	}
