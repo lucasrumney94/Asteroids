@@ -16,8 +16,6 @@ public:
 
 	void SetupShader();
 
-	void SetupVertices();
-
 private:
 	Entity mCamera;
 

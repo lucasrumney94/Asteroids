@@ -96,7 +96,7 @@ int main(void) {
 
 	Renderable cubeRenderable = Renderable();
 	cubeRenderable.VAO = MeshUtils::LoadFromArray(cubePositions, 108);
-	//cubeRenderable.windingOrder = GL_CW;
+	cubeRenderable.windingOrder = GL_CW;
 
 	gCoordinator.AddComponent<Renderable>(
 		cube,

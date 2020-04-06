@@ -8,4 +8,7 @@ struct Renderable
 	GLuint VAO = 0;
 	GLuint renderingProgram;
 	glm::vec3 color;
+
+	// GL options
+	GLenum windingOrder = GL_CCW;
 };

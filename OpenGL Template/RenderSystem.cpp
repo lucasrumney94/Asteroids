@@ -62,7 +62,7 @@ void RenderSystem::Update()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(pMat));
 
 		glEnable(GL_CULL_FACE);
-		glFrontFace(GL_CW);
+		glFrontFace(renderable.windingOrder);
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LEQUAL);
 
