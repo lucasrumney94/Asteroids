@@ -4,12 +4,13 @@
 #include "Transform.hpp"
 
 #include "Coordinator.hpp"
+#include "MeshUtils.h"
 
 #include "RenderSystem.hpp"
 
 #include "main.h"
 #include <GL\glew.h>
-#include <GLFW/glfw3.h>
+#include <GLFW\glfw3.h>
 #include <iostream>
 
 using namespace std;
@@ -52,12 +53,22 @@ int main(void) {
 	Transform cubeTransform = Transform();
 	cubeTransform.position = glm::vec3(0.0f, -2.0f, 0.0f);
 
+	Transform pyramidTransform = Transform();
+	pyramidTransform.position = glm::vec3(0.0f, 2.0f, 0.0f);
+
 	Entity cube = gCoordinator.CreateEntity();
 	gCoordinator.AddComponent<Transform>(
 		cube,
 		cubeTransform
 		);
 
+	Entity pyramid = gCoordinator.CreateEntity();
+	gCoordinator.AddComponent<Transform>(
+		pyramid,
+		pyramidTransform
+		);
+
+	// 2x2x2 cube at origin LEN 108
 	float cubePositions[] = {
 		-1.0f,  1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f,
 		1.0f, -1.0f, -1.0f, 1.0f,  1.0f, -1.0f, -1.0f,  1.0f, -1.0f,
@@ -73,16 +84,34 @@ int main(void) {
 		1.0f,  1.0f,  1.0f, -1.0f,  1.0f,  1.0f, -1.0f,  1.0f, -1.0f
 	};
 
+	//Pyramid with 18 vertices comprising 6 triangles (4 tri sides + 2 tri on bottom) LEN 54
+	float pyramidPositions[] = {
+		-1.0f, -1.0f, 1.0f, 1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f,    //front
+		1.0f, -1.0f, 1.0f, 1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,    //right
+		1.0f, -1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 0.0f, 1.0f, 0.0f,  //back
+		-1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, 0.0f, 1.0f, 0.0f,  //left
+		-1.0f, -1.0f, -1.0f, 1.0f, -1.0f, 1.0f, -1.0f, -1.0f, 1.0f, //LF
+		1.0f, -1.0f, 1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f  //RR
+	};
+
 	Renderable cubeRenderable = Renderable();
-	std::copy(cubePositions, cubePositions + 108, cubeRenderable.vertexPositions);
+	cubeRenderable.VAO = MeshUtils::LoadFromArray(cubePositions, 108);
+	//cubeRenderable.windingOrder = GL_CW;
 
 	gCoordinator.AddComponent<Renderable>(
 		cube,
 		cubeRenderable
 		);
 
+	Renderable pyramidRenderable = Renderable();
+	pyramidRenderable.VAO = MeshUtils::LoadFromArray(pyramidPositions, 54);
+
+	gCoordinator.AddComponent<Renderable>(
+		pyramid,
+		pyramidRenderable
+		);
+
 	renderSystem->SetupShader();
-	renderSystem->SetupVertices();
 
 	while (!glfwWindowShouldClose(window)) {
 		

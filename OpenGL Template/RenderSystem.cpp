@@ -80,24 +80,3 @@ void RenderSystem::SetupShader()
 		renderable.renderingProgram = Utils::createShaderProgram("vertShader.glsl", "fragShader.glsl");
 	}
 }
-
-void RenderSystem::SetupVertices() 
-{
-	for (auto const& entity : mEntities)
-	{
-		auto& renderable = gCoordinator.GetComponent<Renderable>(entity);
-		if (renderable.VAO == 0)
-		{
-			glGenVertexArrays(1, &renderable.VAO);
-			glBindVertexArray(renderable.VAO);
-			GLuint vbo;
-			glGenBuffers(1, &vbo);
-
-			glBindBuffer(GL_ARRAY_BUFFER, vbo);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(renderable.vertexPositions), renderable.vertexPositions, GL_STATIC_DRAW);
-			glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
-			glEnableVertexAttribArray(0);
-			glBindVertexArray(0);
-		}
-	}
-}

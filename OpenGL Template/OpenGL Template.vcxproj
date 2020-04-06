@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MeshUtils.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
@@ -156,6 +157,7 @@
     <ClInclude Include="Coordinator.hpp" />
     <ClInclude Include="EntityManager.hpp" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="MeshUtils.h" />
     <ClInclude Include="Renderable.hpp" />
     <ClInclude Include="RenderSystem.hpp" />
     <ClInclude Include="System.hpp" />
