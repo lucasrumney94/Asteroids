@@ -1,15 +1,5 @@
 #include "RenderSystem.hpp"
 
-#include "Utils.h"
-#include "Camera.hpp"
-#include "Renderable.hpp"
-#include "Transform.hpp"
-#include "Coordinator.hpp"
-#include <GL\glew.h>
-#include <glm\glm.hpp>
-#include <glm\gtc\matrix_transform.hpp>
-#include <cmath>
-
 extern Coordinator gCoordinator;
 
 void RenderSystem::Init()
@@ -17,7 +7,7 @@ void RenderSystem::Init()
 	mCamera = gCoordinator.CreateEntity();
 
 	Transform camTransform = Transform();
-	camTransform.position = glm::vec3(0.0f, 0.0f, 8.0f);
+	camTransform.SetPosition(0.0f, 0.0f, 8.0f);
 
 	gCoordinator.AddComponent(
 		mCamera,
@@ -54,8 +44,10 @@ void RenderSystem::Update()
 
 		pMat = camera.projectionTransform;
 
-		vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-camTransform.position.x, -camTransform.position.y, -camTransform.position.z));
-		mMat = glm::translate(glm::mat4(1.0f), glm::vec3(transform.position.x, transform.position.y, transform.position.z));
+		vMat = glm::translate(glm::mat4(1.0f), -camTransform.GetPosition());
+		mMat = glm::translate(glm::mat4(1.0f), transform.GetPosition());
+		glm::mat4x4 rotationMatrix = glm::toMat4(transform.GetRotation());
+		mMat *= rotationMatrix;
 		mvMat = vMat * mMat;
 
 		glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));

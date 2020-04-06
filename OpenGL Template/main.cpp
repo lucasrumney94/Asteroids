@@ -51,10 +51,10 @@ int main(void) {
 	renderSystem->Init();
 
 	Transform cubeTransform = Transform();
-	cubeTransform.position = glm::vec3(0.0f, -2.0f, 0.0f);
+	cubeTransform.SetPosition(0.0f, -2.0f, 0.0f);
 
 	Transform pyramidTransform = Transform();
-	pyramidTransform.position = glm::vec3(0.0f, 2.0f, 0.0f);
+	pyramidTransform.SetPosition(0.0f, 2.0f, 0.0f);
 
 	Entity cube = gCoordinator.CreateEntity();
 	gCoordinator.AddComponent<Transform>(
@@ -119,6 +119,13 @@ int main(void) {
 		renderSystem->Update();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		float sinTime = sin(glfwGetTime());
+		float cosTime = cos(glfwGetTime());
+		Transform* CubeTrans = &gCoordinator.GetComponent<Transform>(cube);
+		CubeTrans->Translate(glm::vec3(cosTime * 0.02f, sinTime * 0.02f, 0.0f));
+		//CubeTrans->SetRotationEulerAngles(glm::vec3(0.0f, glm::pi<float>() / 4.0f, 0.0f));
+		CubeTrans->RotateByDegrees(2.0f, glm::vec3(sinTime, cosTime, 0.0f));
 	}
 
 	glfwDestroyWindow(window);
