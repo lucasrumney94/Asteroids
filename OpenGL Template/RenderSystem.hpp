@@ -21,6 +21,8 @@ class Event;
 class RenderSystem : public System
 {
 public:
+	Entity mCamera;
+
 	void Init();
 
 	void Update();
@@ -28,8 +30,6 @@ public:
 	void SetupShader();
 
 private:
-	Entity mCamera;
-
 	GLuint mvLoc, projLoc;
 
 	glm::mat4 pMat, vMat, mMat, mvMat;
