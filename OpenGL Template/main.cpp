@@ -130,7 +130,25 @@ int main(void) {
 		CubeTrans->Translate(glm::vec3(cosTime * 0.02f, sinTime * 0.02f, 0.0f));
 		//CubeTrans->SetRotationEulerAngles(glm::vec3(0.0f, glm::pi<float>() / 4.0f, 0.0f));
 		CubeTrans->RotateByDegrees(2.0f, glm::vec3(sinTime, cosTime, 0.0f));
-		camTrans->Translate(glm::vec3(0, 0, cosTime * 0.25f));
+
+		if (glfwGetKey(window, GLFW_KEY_W)) {
+			camTrans->Translate(glm::vec3(0, 0, -0.1f));
+		}
+		if (glfwGetKey(window, GLFW_KEY_A)) {
+			camTrans->Translate(glm::vec3(-0.1f, 0, 0));
+		}
+		if (glfwGetKey(window, GLFW_KEY_S)) {
+			camTrans->Translate(glm::vec3(0, 0, 0.1f));
+		}
+		if (glfwGetKey(window, GLFW_KEY_D)) {
+			camTrans->Translate(glm::vec3(0.1f, 0, 0));
+		}
+		if (glfwGetKey(window, GLFW_KEY_Z)) {
+			camTrans->Translate(glm::vec3(0, 0.1f, 0));
+		}
+		if (glfwGetKey(window, GLFW_KEY_X)) {
+			camTrans->Translate(glm::vec3(0, -0.1f, 0));
+		}
 	}
 
 	glfwDestroyWindow(window);

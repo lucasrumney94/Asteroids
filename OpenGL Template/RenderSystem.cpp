@@ -26,7 +26,7 @@ void RenderSystem::Init()
 void RenderSystem::Update()
 {
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glClearColor(0.0, 1.0, 0.0, 1.0);
+	glClearColor(1.0, 0.8, 0.6, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	for (auto const& entity : mEntities)
