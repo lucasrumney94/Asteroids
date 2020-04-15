@@ -7,5 +7,5 @@ class System
 {
 public:
 	std::set<Entity*> mEntities;
-	virtual void Update();
+	virtual void Update() = 0;
 };
