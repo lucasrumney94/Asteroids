@@ -68,6 +68,18 @@ public:
 		mSystemManager->EntitySignatureChanged(entity, signature);
 	}
 
+	void EnableEntity(Entity* entity)
+	{
+		auto signature = mEntityManager->GetSignature(entity->id);
+		mSystemManager->EntityEnabled(entity, signature);
+	}
+
+	void DisableEntity(Entity* entity)
+	{
+		auto signature = mEntityManager->GetSignature(entity->id);
+		mSystemManager->EntityDisabled(entity, signature);
+	}
+
 	template<typename T>
 	T& GetComponent(Entity* entity)
 	{

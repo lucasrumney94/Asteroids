@@ -27,7 +27,7 @@ public:
 		assert(mLivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 
 		EntityID id = mAvailableEntities.front();
-		Entity* newEntity = new Entity{ true, name, id };
+		Entity* newEntity = new Entity{ name, id };
 		mEntities[id] = newEntity;
 		mAvailableEntities.pop();
 		++mLivingEntityCount;

@@ -117,12 +117,27 @@ int main(void) {
 	Transform* camTrans = &gCoordinator.GetComponent<Transform>(renderSystem->mCamera);
 	camTrans->Translate(glm::vec3(0, 0, 15));
 
+	int frame = 0;
+
 	while (!glfwWindowShouldClose(window)) {
 		
 		// TODO: Add universal update for systems to the system manager
 		renderSystem->Update();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		// RAVE
+		if (frame % 20 <= 10)
+		{
+			gCoordinator.EnableEntity(cube);
+			gCoordinator.DisableEntity(pyramid);
+		}
+		else
+		{
+			gCoordinator.EnableEntity(pyramid);
+			gCoordinator.DisableEntity(cube);
+		}
+		frame++;
 
 		float sinTime = sin(glfwGetTime());
 		float cosTime = cos(glfwGetTime());

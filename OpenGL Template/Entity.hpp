@@ -4,7 +4,7 @@
 
 struct Entity
 {
-	bool enabled = true;
+public:
 	std::string name;
-	EntityID id;
+	const EntityID id;
 };
