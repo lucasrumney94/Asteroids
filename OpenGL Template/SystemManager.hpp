@@ -35,6 +35,12 @@ public:
 		mSignatures.insert({ typeName, signature });
 	}
 
+	void UpdateSystems() {
+		for (std::pair<const char*, std::shared_ptr<System>> system : mSystems) {
+			system.second->Update();
+		}
+	}
+
 	void EntityDestroyed(Entity* entity)
 	{
 		for (auto const& pair : mSystems)

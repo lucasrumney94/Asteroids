@@ -106,4 +106,7 @@ public:
 		mSystemManager->SetSignature<T>(signature);
 	}
 
+	void UpdateSystems() {
+		mSystemManager->UpdateSystems();
+	}
 };

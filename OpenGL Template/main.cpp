@@ -137,12 +137,14 @@ int main(void) {
 	while (!glfwWindowShouldClose(window)) {
 		
 		// TODO: Add universal update for systems to the system manager
-		renderSystem->Update();
+		//renderSystem->Update();
+		gCoordinator.UpdateSystems();
+
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 
 		// RAVE
-		if (frame % 20 <= 10)
+		if (frame % 4 <= 2)
 		{
 			gCoordinator.EnableEntity(cube);
 			gCoordinator.DisableEntity(pyramid);
