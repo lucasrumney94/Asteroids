@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Types.hpp"
+#include "Entity.hpp"
 #include <array>
 #include <cassert>
 #include <unordered_map>
@@ -10,7 +11,7 @@ class IComponentArray
 {
 public:
 	virtual ~IComponentArray() = default;
-	virtual void EntityDestroyed(Entity entity) = 0;
+	virtual void EntityDestroyed(EntityID entity) = 0;
 };
 
 
@@ -20,12 +21,12 @@ class ComponentArray : public IComponentArray
 
 private:
 	std::array<T, MAX_ENTITIES> mComponentArray{};
-	std::unordered_map<Entity, size_t> mEntityToIndexMap{};
-	std::unordered_map<size_t, Entity> mIndexToEntityMap{};
+	std::unordered_map<EntityID, size_t> mEntityToIndexMap{};
+	std::unordered_map<size_t, EntityID> mIndexToEntityMap{};
 	size_t mSize{};
 
 public:
-	void InsertData(Entity entity, T component)
+	void InsertData(EntityID entity, T component)
 	{
 		assert(mEntityToIndexMap.find(entity) == mEntityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -37,7 +38,7 @@ public:
 		++mSize;
 	}
 
-	void RemoveData(Entity entity)
+	void RemoveData(EntityID entity)
 	{
 		assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Removing non-existent component.");
 
@@ -47,7 +48,7 @@ public:
 		mComponentArray[indexOfRemovedEntity] = mComponentArray[indexOfLastElement];
 
 		// Update map to point to moved spot
-		Entity entityOfLastElement = mIndexToEntityMap[indexOfLastElement];
+		EntityID entityOfLastElement = mIndexToEntityMap[indexOfLastElement];
 		mEntityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
 		mIndexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
 
@@ -57,14 +58,14 @@ public:
 		--mSize;
 	}
 
-	T& GetData(Entity entity)
+	T& GetData(EntityID entity)
 	{
 		assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Retrieving non-existent component.");
 
 		return mComponentArray[mEntityToIndexMap[entity]];
 	}
 
-	void EntityDestroyed(Entity entity) override
+	void EntityDestroyed(EntityID entity) override
 	{
 		if (mEntityToIndexMap.find(entity) != mEntityToIndexMap.end())
 		{

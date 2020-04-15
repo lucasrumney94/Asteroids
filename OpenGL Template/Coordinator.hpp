@@ -22,16 +22,16 @@ public:
 
 
 	// Entity methods
-	Entity CreateEntity()
+	Entity* CreateEntity(std::string name)
 	{
-		return mEntityManager->CreateEntity();
+		return mEntityManager->CreateEntity(name);
 	}
 
-	void DestroyEntity(Entity entity)
+	void DestroyEntity(Entity* entity)
 	{
-		mEntityManager->DestroyEntity(entity);
+		mEntityManager->DestroyEntity(entity->id);
 
-		mComponentManager->EntityDestroyed(entity);
+		mComponentManager->EntityDestroyed(entity->id);
 
 		mSystemManager->EntityDestroyed(entity);
 	}
@@ -45,33 +45,33 @@ public:
 	}
 
 	template<typename T>
-	void AddComponent(Entity entity, T component)
+	void AddComponent(Entity* entity, T component)
 	{
-		mComponentManager->AddComponent<T>(entity, component);
+		mComponentManager->AddComponent<T>(entity->id, component);
 
-		auto signature = mEntityManager->GetSignature(entity);
+		auto signature = mEntityManager->GetSignature(entity->id);
 		signature.set(mComponentManager->GetComponentType<T>(), true);
-		mEntityManager->SetSignature(entity, signature);
+		mEntityManager->SetSignature(entity->id, signature);
 
 		mSystemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T>
-	void RemoveComponent(Entity entity)
+	void RemoveComponent(Entity* entity)
 	{
-		mComponentManager->RemoveComponent<T>(entity);
+		mComponentManager->RemoveComponent<T>(entity->id);
 
-		auto signature = mEntityManager->GetSignature(entity);
+		auto signature = mEntityManager->GetSignature(entity->id);
 		signature.set(mComponentManager->GetComponentType<T>(), false);
-		mEntityManager->SetSignature(entity, signature);
+		mEntityManager->SetSignature(entity->id, signature);
 
 		mSystemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T>
-	T& GetComponent(Entity entity)
+	T& GetComponent(Entity* entity)
 	{
-		return mComponentManager->GetComponent<T>(entity);
+		return mComponentManager->GetComponent<T>(entity->id);
 	}
 
 	template<typename T>

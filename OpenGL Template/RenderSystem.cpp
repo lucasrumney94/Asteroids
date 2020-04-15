@@ -4,7 +4,7 @@ extern Coordinator gCoordinator;
 
 void RenderSystem::Init()
 {
-	mCamera = gCoordinator.CreateEntity();
+	mCamera = gCoordinator.CreateEntity("camera");
 
 	Transform camTransform = Transform();
 	camTransform.SetPosition(0.0f, 0.0f, 8.0f);

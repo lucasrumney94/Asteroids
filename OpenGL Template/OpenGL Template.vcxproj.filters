@@ -83,6 +83,12 @@
     <ClInclude Include="MeshUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Component.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertShader.glsl">

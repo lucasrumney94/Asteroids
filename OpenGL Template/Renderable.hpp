@@ -1,9 +1,10 @@
 #pragma once
 
+#include "Component.hpp"
 #include <glm\glm.hpp>
 #include <GL\glew.h>
 
-struct Renderable
+struct Renderable : Component
 {
 	GLuint VAO = 0;
 	GLuint renderingProgram;

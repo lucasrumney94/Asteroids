@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Types.hpp"
+#include "Entity.hpp"
 #include <queue>
 #include <array>
 #include <cassert>
@@ -8,49 +9,53 @@
 class EntityManager
 {
 private:
-	std::queue<Entity> mAvailableEntities{};
+	std::queue<EntityID> mAvailableEntities{};
+	std::array<Entity*, MAX_ENTITIES> mEntities{};
 	std::array<Signature, MAX_ENTITIES> mSignatures{};
 	uint32_t mLivingEntityCount{};
 
 public:
 	EntityManager() {
-		for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
+		for (EntityID entityid = 0; entityid < MAX_ENTITIES; ++entityid)
 		{
-			mAvailableEntities.push(entity);
+			mAvailableEntities.push(entityid);
 		}
 	}
 
-	Entity CreateEntity()
+	Entity* CreateEntity(std::string name)
 	{
 		assert(mLivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 
-		Entity id = mAvailableEntities.front();
+		EntityID id = mAvailableEntities.front();
+		Entity* newEntity = new Entity{ true, name, id };
+		mEntities[id] = newEntity;
 		mAvailableEntities.pop();
 		++mLivingEntityCount;
 
-		return id;
+		return newEntity;
 	}
 
-	void DestroyEntity(Entity entity)
+	void DestroyEntity(EntityID id)
 	{
-		assert(entity < MAX_ENTITIES && "Entity out of range.");
+		assert(id < MAX_ENTITIES && "Entity out of range.");
 
-		mSignatures[entity].reset();
-		mAvailableEntities.push(entity);
+		delete(mEntities[id]);
+		mSignatures[id].reset();
+		mAvailableEntities.push(id);
 		--mLivingEntityCount;
 	}
 
-	void SetSignature(Entity entity, Signature signature)
+	void SetSignature(EntityID id, Signature signature)
 	{
-		assert(entity < MAX_ENTITIES && "Entity out of range.");
+		assert(id < MAX_ENTITIES && "Entity out of range.");
 
-		mSignatures[entity] = signature;
+		mSignatures[id] = signature;
 	}
 
-	Signature GetSignature(Entity entity)
+	Signature GetSignature(EntityID id)
 	{
-		assert(entity < MAX_ENTITIES && "Entity out of range.");
+		assert(id < MAX_ENTITIES && "Entity out of range.");
 
-		return mSignatures[entity];
+		return mSignatures[id];
 	}
 };

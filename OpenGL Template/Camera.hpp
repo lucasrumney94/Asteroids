@@ -1,9 +1,10 @@
 #pragma once
 
+#include "Component.hpp"
 #include <glm\glm.hpp>
 #include <glm\gtc\type_ptr.hpp>
 
-struct Camera
+struct Camera : Component
 {
 	glm::mat4x4 projectionTransform;
 

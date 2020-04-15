@@ -56,13 +56,13 @@ int main(void) {
 	Transform pyramidTransform = Transform();
 	pyramidTransform.SetPosition(0.0f, 2.0f, 0.0f);
 
-	Entity cube = gCoordinator.CreateEntity();
+	Entity* cube = gCoordinator.CreateEntity("cube");
 	gCoordinator.AddComponent<Transform>(
 		cube,
 		cubeTransform
 		);
 
-	Entity pyramid = gCoordinator.CreateEntity();
+	Entity* pyramid = gCoordinator.CreateEntity("pyramid");
 	gCoordinator.AddComponent<Transform>(
 		pyramid,
 		pyramidTransform

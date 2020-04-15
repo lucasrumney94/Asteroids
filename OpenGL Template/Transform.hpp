@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Component.hpp"
 #include <glm\glm.hpp>
 #include <glm\gtx\euler_angles.hpp>
 #include <glm\gtc\quaternion.hpp>
 
-struct Transform
+struct Transform : Component
 {
 private:
 	glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
