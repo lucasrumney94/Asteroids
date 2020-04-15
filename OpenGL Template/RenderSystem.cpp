@@ -2,6 +2,11 @@
 
 extern Coordinator gCoordinator;
 
+void RenderSystem::SetProjection(glm::mat4 newProjection)
+{
+	gCoordinator.GetComponent<Camera>(mCamera).projectionTransform = newProjection;
+}
+
 void RenderSystem::Init()
 {
 	mCamera = gCoordinator.CreateEntity("camera");

@@ -16,9 +16,24 @@
 using namespace std;
 
 Coordinator gCoordinator;
+int width;
+int height;
+float aspect;
+glm::mat4 pMat;
 
-void init(GLFWwindow* window) {}
+std::shared_ptr<RenderSystem> renderSystem;
 
+void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
+	aspect = (float)newWidth / (float)newHeight;
+	glViewport(0, 0, newWidth, newHeight);
+	renderSystem->SetProjection(glm::perspective(1.0472f, aspect, 0.1f, 1000.0f));
+}
+
+void init(GLFWwindow* window)
+{
+	glfwGetFramebufferSize(window, &width, &height);
+	glfwSetWindowSizeCallback(window, window_size_callback);
+}
 
 int main(void) {
 	if (!glfwInit()) {
@@ -40,7 +55,7 @@ int main(void) {
 	gCoordinator.RegisterComponent<Transform>();
 	gCoordinator.RegisterComponent<Renderable>();
 
-	auto renderSystem = gCoordinator.RegisterSystem<RenderSystem>();
+	renderSystem = gCoordinator.RegisterSystem<RenderSystem>();
 	{
 		Signature signature;
 		signature.set(gCoordinator.GetComponentType<Renderable>());

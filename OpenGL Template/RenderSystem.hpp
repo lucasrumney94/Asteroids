@@ -23,6 +23,8 @@ class RenderSystem : public System
 public:
 	Entity* mCamera;
 
+	void SetProjection(glm::mat4);
+
 	void Init();
 
 	void Update();
