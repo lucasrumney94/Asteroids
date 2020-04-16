@@ -39,6 +39,12 @@
     <ClCompile Include="MeshUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BoxCollider.hpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxColliderSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -88,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="Entity.hpp">
       <Filter>Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxColliderSystem.hpp">
+      <Filter>Source Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -146,12 +146,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BoxCollider.hpp" />
+    <ClCompile Include="BoxColliderSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshUtils.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoxColliderSystem.hpp" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Component.hpp" />
     <ClInclude Include="ComponentArray.hpp" />
