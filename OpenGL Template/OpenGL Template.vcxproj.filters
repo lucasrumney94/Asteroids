@@ -98,6 +98,9 @@
     <ClInclude Include="BoxColliderSystem.hpp">
       <Filter>Source Files\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="SOIL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertShader.glsl">
@@ -106,5 +109,16 @@
     <None Include="fragShader.glsl">
       <Filter>Source Files\Shaders</Filter>
     </None>
+    <None Include="vertShader2.glsl">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="fragShader2.glsl">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\checkerBoard.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@
 #include <glm\gtc\type_ptr.hpp> // glm::value_ptr
 #include <glm\gtc\matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
 #include "Utils.h"
+#include "SOIL.h"
 using namespace std;
 
 Utils::Utils() {}
@@ -170,7 +171,8 @@ GLuint Utils::createShaderProgram(const char* vp, const char* tCS, const char* t
 //}
 
 //GLuint Utils::loadTexture(const char *texImagePath)
-//{	GLuint textureRef;
+//{	
+//	GLuint textureRef;
 //	textureRef = SOIL_load_OGL_texture(texImagePath, SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_INVERT_Y);
 //	if (textureRef == 0) cout << "didnt find texture file " << texImagePath << endl;
 //	// ----- mipmap/anisotropic section

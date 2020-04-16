@@ -166,6 +166,7 @@
     <ClInclude Include="MeshUtils.h" />
     <ClInclude Include="Renderable.hpp" />
     <ClInclude Include="RenderSystem.hpp" />
+    <ClInclude Include="SOIL.h" />
     <ClInclude Include="System.hpp" />
     <ClInclude Include="SystemManager.hpp" />
     <ClInclude Include="Transform.hpp" />
@@ -174,7 +175,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fragShader.glsl" />
+    <None Include="fragShader2.glsl" />
     <None Include="vertShader.glsl" />
+    <None Include="vertShader2.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\checkerBoard.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

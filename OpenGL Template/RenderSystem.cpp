@@ -74,6 +74,6 @@ void RenderSystem::SetupShader()
 	for (auto const& entity : mEntities)
 	{
 		auto& renderable = gCoordinator.GetComponent<Renderable>(entity);
-		renderable.renderingProgram = Utils::createShaderProgram("vertShader.glsl", "fragShader.glsl");
+		renderable.renderingProgram = Utils::createShaderProgram(renderable.VertShader, renderable.FragShader);
 	}
 }
