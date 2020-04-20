@@ -10,6 +10,8 @@
 #include "RenderSystem.hpp"
 #include "BoxColliderSystem.hpp"
 
+#include "Event.hpp"
+
 #include "main.h"
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -36,6 +38,14 @@ void init(GLFWwindow* window)
 {
 	glfwGetFramebufferSize(window, &width, &height);
 	glfwSetWindowSizeCallback(window, window_size_callback);
+}
+
+void EventListener1() {
+	std::cout << "First Listener" << std::endl;
+}
+
+void EventListener2() {
+	std::cout << "Second Listener" << std::endl;
 }
 
 int main(void) {
@@ -186,6 +196,16 @@ int main(void) {
 
 	Transform* camTrans = &gCoordinator.GetComponent<Transform>(renderSystem->mCamera);
 	camTrans->Translate(glm::vec3(0, 0, 15));
+
+	////Event Testing////
+	Event* event = new Event();
+	
+	event->Subscribe(EventListener1);
+	event->Subscribe(EventListener2);
+
+	event->RaiseEvent();
+
+	/////////////////////
 
 	int frame = 0;
 

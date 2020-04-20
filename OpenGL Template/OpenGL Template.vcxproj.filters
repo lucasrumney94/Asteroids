@@ -101,6 +101,9 @@
     <ClInclude Include="SOIL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Event.hpp">
+      <Filter>Source Files\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertShader.glsl">

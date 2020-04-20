@@ -30,7 +30,7 @@ void BoxColliderSystem::Update() {
 			}
 		}
 	}
-	std::cout << "                                                                                                  collisions: " << collisions << std::endl;
+	//std::cout << "                                                                                                  collisions: " << collisions << std::endl;
 }
 
 bool BoxColliderSystem::checkOverlap(Entity* firstEntity, Entity* secondEntity) {
