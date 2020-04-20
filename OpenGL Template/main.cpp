@@ -2,11 +2,13 @@
 #include "Camera.hpp"
 #include "Renderable.hpp"
 #include "Transform.hpp"
+#include "BoxCollider.hpp"
 
 #include "Coordinator.hpp"
 #include "MeshUtils.h"
 
 #include "RenderSystem.hpp"
+#include "BoxColliderSystem.hpp"
 
 #include "main.h"
 #include <GL\glew.h>
@@ -22,6 +24,7 @@ float aspect;
 glm::mat4 pMat;
 
 std::shared_ptr<RenderSystem> renderSystem;
+std::shared_ptr<BoxColliderSystem> boxColliderSystem;
 
 void window_size_callback(GLFWwindow* win, int newWidth, int newHeight) {
 	aspect = (float)newWidth / (float)newHeight;
@@ -54,6 +57,7 @@ int main(void) {
 	gCoordinator.RegisterComponent<Camera>();
 	gCoordinator.RegisterComponent<Transform>();
 	gCoordinator.RegisterComponent<Renderable>();
+	gCoordinator.RegisterComponent<BoxCollider>();
 
 	renderSystem = gCoordinator.RegisterSystem<RenderSystem>();
 	{
@@ -61,6 +65,14 @@ int main(void) {
 		signature.set(gCoordinator.GetComponentType<Renderable>());
 		signature.set(gCoordinator.GetComponentType<Transform>());
 		gCoordinator.SetSystemSignature<RenderSystem>(signature);
+	}
+
+	boxColliderSystem = gCoordinator.RegisterSystem<BoxColliderSystem>();
+	{
+		Signature signature;
+		signature.set(gCoordinator.GetComponentType<Transform>());
+		signature.set(gCoordinator.GetComponentType<BoxCollider>());
+		gCoordinator.SetSystemSignature<BoxColliderSystem>(signature);
 	}
 
 	gCoordinator.InitSystems();
@@ -158,6 +170,20 @@ int main(void) {
 
 	renderSystem->SetupShader();
 
+	BoxCollider cubeCollider = BoxCollider();
+	cubeCollider.boundingBox = glm::vec3(2);
+	gCoordinator.AddComponent<BoxCollider>(
+		cube,
+		cubeCollider
+		);
+
+	BoxCollider pyramidCollider = BoxCollider();
+	pyramidCollider.boundingBox = glm::vec3(2);
+	gCoordinator.AddComponent<BoxCollider>(
+		pyramid,
+		pyramidCollider
+		);
+
 	Transform* camTrans = &gCoordinator.GetComponent<Transform>(renderSystem->mCamera);
 	camTrans->Translate(glm::vec3(0, 0, 15));
 
@@ -189,7 +215,7 @@ int main(void) {
 		float sinTime = sin(glfwGetTime());
 		float cosTime = cos(glfwGetTime());
 		Transform* CubeTrans = &gCoordinator.GetComponent<Transform>(cube);
-		CubeTrans->Translate(glm::vec3(cosTime * 0.02f, sinTime * 0.02f, 0.0f));
+		CubeTrans->Translate(glm::vec3(cosTime * 0.03f, sinTime * 0.03f, 0.0f));
 		//CubeTrans->SetRotationEulerAngles(glm::vec3(0.0f, glm::pi<float>() / 4.0f, 0.0f));
 		CubeTrans->RotateByDegrees(2.0f, glm::vec3(sinTime, cosTime, 0.0f));
 	}

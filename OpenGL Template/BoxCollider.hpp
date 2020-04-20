@@ -5,5 +5,7 @@
 #include <GL\glew.h>
 
 struct BoxCollider : Component {
-	glm::vec3 boundingBox;
+public:
+	glm::vec3 centerOffset = glm::vec3(0);
+	glm::vec3 boundingBox = glm::vec3(1);
 };

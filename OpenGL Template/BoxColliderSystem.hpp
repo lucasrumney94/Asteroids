@@ -4,8 +4,7 @@
 
 #include "System.hpp"
 #include "Renderable.hpp"
-#include "Camera.hpp"
-#include "Renderable.hpp"
+#include "BoxCollider.hpp"
 #include "Transform.hpp"
 #include "Coordinator.hpp"
 
@@ -22,6 +21,8 @@ public:
 
 	bool DrawBoundingBox; //maybe for debug purposes.
 
+	void Init() override;
 	void Update() override;
+	bool checkOverlap(Entity*, Entity*);
 };
 
