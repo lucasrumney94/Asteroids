@@ -63,7 +63,7 @@ int main(void) {
 		gCoordinator.SetSystemSignature<RenderSystem>(signature);
 	}
 
-	renderSystem->Init();
+	gCoordinator.InitSystems();
 
 	Transform cubeTransform = Transform();
 	cubeTransform.SetPosition(0.0f, -2.0f, 0.0f);
@@ -166,7 +166,6 @@ int main(void) {
 	while (!glfwWindowShouldClose(window)) {
 		
 		// TODO: Add universal update for systems to the system manager
-		//renderSystem->Update();
 		gCoordinator.UpdateSystems();
 
 		glfwSwapBuffers(window);

@@ -35,6 +35,12 @@ public:
 		mSignatures.insert({ typeName, signature });
 	}
 
+	void InitSystems() {
+		for (std::pair<const char*, std::shared_ptr<System>> system : mSystems) {
+			system.second->Init();
+		}
+	}
+
 	void UpdateSystems() {
 		for (std::pair<const char*, std::shared_ptr<System>> system : mSystems) {
 			system.second->Update();

@@ -25,7 +25,7 @@ public:
 
 	void SetProjection(glm::mat4);
 
-	void Init();
+	void Init() override;
 
 	void Update() override;
 
