@@ -1,15 +1,15 @@
 #pragma once
-#include "BoxCollider.hpp"
 #include <list>
+#include "BoxCollider.hpp"
 
 //these could maybe go into their own file?
 typedef void (*BasicEventListener) (void);
-typedef void (*CollisionEventListener) (BoxCollider); //maybe typedef specific types of events that will require specific parameters?
+typedef void (*CollisionEventListener) (BoxCollider, BoxCollider);
 
 class Event 
 {
 
-private:
+protected:
 	std::list<BasicEventListener> Subscribers;
 
 public:
@@ -24,11 +24,3 @@ public:
 		Subscribers.push_back(listener);
 	}
 };
-
-/*
-
-Were going to need event listeners that can accept different kinds of parameters.
-
---We could either make an extension class for every kind of event listener or we 
-
-*/
