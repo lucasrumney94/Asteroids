@@ -40,8 +40,8 @@ void init(GLFWwindow* window)
 	glfwSetWindowSizeCallback(window, window_size_callback);
 }
 
-void EventListener1() {
-	std::cout << "First Listener" << std::endl;
+void TestCollisionCallback(Entity* owner, Entity* other) {
+	std::cout << owner->name << " collided with: "<< other->name << std::endl;
 }
 
 void EventListener2() {
@@ -86,6 +86,8 @@ int main(void) {
 	}
 
 	gCoordinator.InitSystems();
+
+	boxColliderSystem->boxCollisionEvent->Subscribe(TestCollisionCallback);
 
 	Transform cubeTransform = Transform();
 	cubeTransform.SetPosition(0.0f, -2.0f, 0.0f);
@@ -196,16 +198,6 @@ int main(void) {
 
 	Transform* camTrans = &gCoordinator.GetComponent<Transform>(renderSystem->mCamera);
 	camTrans->Translate(glm::vec3(0, 0, 15));
-
-	////Event Testing////
-	Event<BasicEventListener>* event = new Event<BasicEventListener>();
-	
-	event->Subscribe(EventListener1);
-	event->Subscribe(EventListener2);
-
-	event->RaiseEvent();
-
-	/////////////////////
 
 	int frame = 0;
 
