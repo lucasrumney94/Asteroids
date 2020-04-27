@@ -2,12 +2,12 @@
 
 #include "Utils.h"
 
+#include "Event.hpp"
 #include "System.hpp"
 #include "Renderable.hpp"
 #include "BoxCollider.hpp"
 #include "Transform.hpp"
 #include "Coordinator.hpp"
-#include "Event.hpp"
 
 #include <memory>
 #include <GL\glew.h>
@@ -18,18 +18,12 @@
 
 typedef void (*CollisionEventListener) (Entity*, Entity*);
 
-class BoxCollisionEvent
+class BoxCollisionEvent : public Event<CollisionEventListener>
 {
-protected:
-	std::list<CollisionEventListener> Subscribers;
 
 public:
 	void RaiseBoxCollisionEvent(Entity* owner, Entity* other);
 
-	void Subscribe(CollisionEventListener listener)
-	{
-		Subscribers.push_back(listener);
-	}
 };
 
 class BoxColliderSystem : public System
@@ -43,4 +37,3 @@ public:
 	void Update() override;
 	bool checkOverlap(Entity*, Entity*);
 };
-

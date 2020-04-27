@@ -42,10 +42,11 @@ void init(GLFWwindow* window)
 
 void TestCollisionCallback(Entity* owner, Entity* other) {
 	std::cout << owner->name << " collided with: "<< other->name << std::endl;
-}
-
-void EventListener2() {
-	std::cout << "Second Listener" << std::endl;
+	Transform* ownerTransform = &gCoordinator.GetComponent<Transform>(owner);
+	if (owner->name == "cube")
+	{
+		ownerTransform->Translate(glm::vec3(0.0f, -1.0f, 0.0f));
+	}
 }
 
 int main(void) {

@@ -12,6 +12,8 @@ private:
 	std::unique_ptr<EntityManager> mEntityManager;
 	std::unique_ptr<SystemManager> mSystemManager;
 
+	// TODO: Queues for enable/disable, add/destroy entities
+
 public:
 	void Init()
 	{
@@ -19,6 +21,8 @@ public:
 		mEntityManager = std::make_unique<EntityManager>();
 		mSystemManager = std::make_unique<SystemManager>();
 	}
+
+	// TODO: Update function, goes through entity queues
 
 
 	// Entity methods

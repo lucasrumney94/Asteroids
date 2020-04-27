@@ -16,8 +16,6 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <cmath>
 
-class Event;
-
 class RenderSystem : public System
 {
 public:
