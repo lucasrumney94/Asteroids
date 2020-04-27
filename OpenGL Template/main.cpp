@@ -198,7 +198,7 @@ int main(void) {
 	camTrans->Translate(glm::vec3(0, 0, 15));
 
 	////Event Testing////
-	Event* event = new Event();
+	Event<BasicEventListener>* event = new Event<BasicEventListener>();
 	
 	event->Subscribe(EventListener1);
 	event->Subscribe(EventListener2);

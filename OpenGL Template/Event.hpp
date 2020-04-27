@@ -8,19 +8,30 @@ typedef void (*CollisionEventListener) (BoxCollider, BoxCollider);
 
 class Event 
 {
-
 protected:
-	std::list<BasicEventListener> Subscribers;
+	std::list<T> Subscribers;
 
 public:
 
-	void RaiseEvent() {
-		for (BasicEventListener listener : Subscribers) {
-			listener();
+	void RaiseEvent(...);
+
+	void Subscribe(T listener);
+};
+
+class CollisionEvent {
+
+protected:
+	std::list<CollisionEventListener> Subscribers;
+
+public:
+
+	void RaiseEvent(BoxCollider owner, BoxCollider other) {
+		for (CollisionEventListener listener : Subscribers) {
+			listener(owner, other);
 		}
 	}
 
-	void Subscribe(BasicEventListener listener) {
+	void Subscribe(CollisionEventListener listener) {
 		Subscribers.push_back(listener);
 	}
 };
