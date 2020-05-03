@@ -69,6 +69,7 @@ void RenderSystem::Update()
 	}
 }
 
+// TODO: Move this into a shader setup class
 void RenderSystem::SetupShader()
 {
 	for (auto const& entity : mEntities)

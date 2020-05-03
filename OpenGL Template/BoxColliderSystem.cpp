@@ -1,10 +1,15 @@
 #include "BoxColliderSystem.hpp"
-#include "BoxCollider.hpp"
-#include "Transform.hpp"
 
 extern Coordinator gCoordinator;
 
+void BoxCollisionEvent::RaiseBoxCollisionEvent(Entity* owner, Entity* other) {
+	for (BoxCollisionEventListener listener : Subscribers) {
+		listener(owner, other);
+	}
+}
+
 void BoxColliderSystem::Init() {
+	boxCollisionEvent = new BoxCollisionEvent();
 	for (auto const& firstEntity : mEntities)
 	{
 
@@ -13,7 +18,6 @@ void BoxColliderSystem::Init() {
 
 
 void BoxColliderSystem::Update() {
-	int collisions = 0;
 
 	for (auto const& firstEntity : mEntities)
 	{
@@ -25,12 +29,12 @@ void BoxColliderSystem::Update() {
 			}
 
 			if (checkOverlap(firstEntity, secondEntity)) {
-				++collisions;
-				//std::cout << "collided! firstEntity:  " << firstEntity->name << " secondEntity: " << secondEntity->name << std::endl;
+				// Raise event
+				boxCollisionEvent->RaiseBoxCollisionEvent(firstEntity, secondEntity);
 			}
 		}
 	}
-	std::cout << "                                                                                                  collisions: " << collisions << std::endl;
+	//std::cout << "collisions: " << collisions << std::endl;
 }
 
 bool BoxColliderSystem::checkOverlap(Entity* firstEntity, Entity* secondEntity) {

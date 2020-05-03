@@ -10,6 +10,8 @@
 #include "RenderSystem.hpp"
 #include "BoxColliderSystem.hpp"
 
+#include "Event.hpp"
+
 #include "main.h"
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -36,6 +38,15 @@ void init(GLFWwindow* window)
 {
 	glfwGetFramebufferSize(window, &width, &height);
 	glfwSetWindowSizeCallback(window, window_size_callback);
+}
+
+void TestCollisionCallback(Entity* owner, Entity* other) {
+	std::cout << owner->name << " collided with: "<< other->name << std::endl;
+	Transform* ownerTransform = &gCoordinator.GetComponent<Transform>(owner);
+	if (owner->name == "cube")
+	{
+		ownerTransform->Translate(glm::vec3(0.0f, -1.0f, 0.0f));
+	}
 }
 
 int main(void) {
@@ -76,6 +87,8 @@ int main(void) {
 	}
 
 	gCoordinator.InitSystems();
+
+	boxColliderSystem->boxCollisionEvent->Subscribe(TestCollisionCallback);
 
 	Transform cubeTransform = Transform();
 	cubeTransform.SetPosition(0.0f, -2.0f, 0.0f);

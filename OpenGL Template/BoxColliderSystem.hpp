@@ -2,6 +2,7 @@
 
 #include "Utils.h"
 
+#include "Event.hpp"
 #include "System.hpp"
 #include "Renderable.hpp"
 #include "BoxCollider.hpp"
@@ -15,9 +16,20 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <cmath>
 
+typedef void (*BoxCollisionEventListener) (Entity*, Entity*);
+
+class BoxCollisionEvent : public Event<BoxCollisionEventListener>
+{
+
+public:
+	void RaiseBoxCollisionEvent(Entity* owner, Entity* other);
+
+};
+
 class BoxColliderSystem : public System
 {
 public:
+	BoxCollisionEvent* boxCollisionEvent;
 
 	bool DrawBoundingBox; //maybe for debug purposes.
 
@@ -25,4 +37,3 @@ public:
 	void Update() override;
 	bool checkOverlap(Entity*, Entity*);
 };
-
