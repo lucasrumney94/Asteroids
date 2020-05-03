@@ -196,7 +196,6 @@ int main(void) {
 		pyramid,
 		pyramidCollider
 		);
-
 	Transform* camTrans = &gCoordinator.GetComponent<Transform>(renderSystem->mCamera);
 	camTrans->Translate(glm::vec3(0, 0, 15));
 

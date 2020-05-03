@@ -2,10 +2,11 @@
 
 #include "Types.hpp"
 #include "Entity.hpp"
+#include "Coordinator.hpp"
 #include <array>
 #include <cassert>
 #include <unordered_map>
-
+#include <exception>
 
 class IComponentArray
 {
@@ -58,9 +59,18 @@ public:
 		--mSize;
 	}
 
+	bool HasData(EntityID entity)
+	{
+		return mEntityToIndexMap.find(entity) != mEntityToIndexMap.end();
+	}
+
 	T& GetData(EntityID entity)
 	{
-		assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Retrieving non-existent component.");
+		// Check if entity does not exist in entity to index map (find will return an iterator past the bounds of the list if not found)
+		if (mEntityToIndexMap.find(entity) == mEntityToIndexMap.end())
+		{
+			throw std::runtime_error("dont work");
+		}
 
 		return mComponentArray[mEntityToIndexMap[entity]];
 	}

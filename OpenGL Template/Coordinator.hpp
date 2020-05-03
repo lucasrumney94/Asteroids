@@ -4,6 +4,8 @@
 #include "EntityManager.hpp"
 #include "SystemManager.hpp"
 #include "Types.hpp"
+#include <iostream>
+#include <typeinfo>
 
 class Coordinator
 {
@@ -84,10 +86,29 @@ public:
 		mSystemManager->EntityDisabled(entity, signature);
 	}
 
+	Entity* GetEntityByID(EntityID id)
+	{
+		return mEntityManager->GetEntityByID(id);
+	}
+
+	template<typename T>
+	bool HasComponent(Entity* entity)
+	{
+		return mComponentManager->HasComponent<T>(entity->id);
+	}
+
 	template<typename T>
 	T& GetComponent(Entity* entity)
 	{
-		return mComponentManager->GetComponent<T>(entity->id);
+		try
+		{
+			return mComponentManager->GetComponent<T>(entity->id);
+		}
+		catch (...)
+		{
+			std::cout << "Tried to retrieve non-existent component " << typeid(T).name() << " on entity " << entity->name << std::endl;
+			throw;
+		}
 	}
 
 	template<typename T>

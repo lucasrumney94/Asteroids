@@ -5,6 +5,7 @@
 #include <any>
 #include <memory>
 #include <unordered_map>
+#include <typeinfo>
 
 class ComponentManager
 {
@@ -59,9 +60,24 @@ public:
 	}
 
 	template<typename T>
+	bool HasComponent(EntityID entity)
+	{
+		return GetComponentArray<T>()->HasData(entity);
+	}
+
+	template<typename T>
 	T& GetComponent(EntityID entity)
 	{
-		return GetComponentArray<T>()->GetData(entity);
+		try
+		{
+			return GetComponentArray<T>()->GetData(entity);
+		}
+		catch (...)
+		{
+			throw;
+		}
+		// we can try it with and without
+		//return GetComponentArray<T>()->GetData(entity);
 	}
 
 	void EntityDestroyed(EntityID entity)

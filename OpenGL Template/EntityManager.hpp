@@ -45,6 +45,11 @@ public:
 		--mLivingEntityCount;
 	}
 
+	Entity* GetEntityByID(EntityID id)
+	{
+		return mEntities[id];
+	}
+
 	void SetSignature(EntityID id, Signature signature)
 	{
 		assert(id < MAX_ENTITIES && "Entity out of range.");
