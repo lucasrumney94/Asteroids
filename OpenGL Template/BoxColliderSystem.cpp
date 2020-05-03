@@ -3,7 +3,7 @@
 extern Coordinator gCoordinator;
 
 void BoxCollisionEvent::RaiseBoxCollisionEvent(Entity* owner, Entity* other) {
-	for (CollisionEventListener listener : Subscribers) {
+	for (BoxCollisionEventListener listener : Subscribers) {
 		listener(owner, other);
 	}
 }

@@ -16,9 +16,9 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include <cmath>
 
-typedef void (*CollisionEventListener) (Entity*, Entity*);
+typedef void (*BoxCollisionEventListener) (Entity*, Entity*);
 
-class BoxCollisionEvent : public Event<CollisionEventListener>
+class BoxCollisionEvent : public Event<BoxCollisionEventListener>
 {
 
 public:
