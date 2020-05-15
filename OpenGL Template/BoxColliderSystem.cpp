@@ -2,14 +2,14 @@
 
 extern Coordinator gCoordinator;
 
-void BoxCollisionEvent::RaiseBoxCollisionEvent(Entity* owner, Entity* other) {
+void BoxCollisionEvent::RaiseBoxCollisionEvent(Entity owner, Entity other) {
 	for (BoxCollisionEventListener listener : Subscribers) {
 		listener(owner, other);
 	}
 }
 
 void BoxColliderSystem::Init() {
-	//BoxCollisionEventMap = new std::map<EntityID, BoxCollisionEvent*>();
+	//BoxCollisionEventMap = new std::map<Entity, BoxCollisionEvent*>();
 	for (auto const& firstEntity : mEntities)
 	{
 
@@ -24,12 +24,12 @@ void BoxColliderSystem::Update() {
 		for (auto const& other : mEntities)
 		{
 			// do not collide with self
-			if (owner->id == other->id) {
+			if (owner == other) {
 				continue;
 			}
 
 			if (checkOverlap(owner, other)) {
-				std::map<EntityID, BoxCollisionEvent*>::iterator entry = BoxCollisionEventMap.find(owner->id);
+				std::map<Entity, BoxCollisionEvent*>::iterator entry = BoxCollisionEventMap.find(owner);
 				// If first entity exists in event map
 				if (entry != BoxCollisionEventMap.end())
 				{
@@ -45,7 +45,7 @@ void BoxColliderSystem::Update() {
 	//std::cout << "collisions: " << collisions << std::endl;
 }
 
-bool BoxColliderSystem::checkOverlap(Entity* firstEntity, Entity* secondEntity) {
+bool BoxColliderSystem::checkOverlap(Entity firstEntity, Entity secondEntity) {
 	auto& firstTransform = gCoordinator.GetComponent<Transform>(firstEntity);
 	BoxCollider& firstCollider = gCoordinator.GetComponent<BoxCollider>(firstEntity);
 
@@ -71,7 +71,7 @@ bool BoxColliderSystem::checkOverlap(Entity* firstEntity, Entity* secondEntity) 
 		((firstMinZ <= secondMaxZ) && (firstMaxZ >= secondMinZ));
 }
 
-void BoxColliderSystem::Subscribe(Entity* entity, BoxCollisionEventListener callback)
+void BoxColliderSystem::Subscribe(Entity entity, BoxCollisionEventListener callback)
 {
 	//if entity.id NOT exists as key in BoxCollisionEventMap:
 	//	add new event to map
@@ -80,13 +80,13 @@ void BoxColliderSystem::Subscribe(Entity* entity, BoxCollisionEventListener call
 
 	if (gCoordinator.HasComponent<BoxCollider>(entity))
 	{
-		std::map<EntityID, BoxCollisionEvent*>::iterator entry = BoxCollisionEventMap.find(entity->id);
+		std::map<Entity, BoxCollisionEvent*>::iterator entry = BoxCollisionEventMap.find(entity);
 		if (!(entry != BoxCollisionEventMap.end()))
 		{
 			BoxCollisionEvent* newEvent = new BoxCollisionEvent();
 			newEvent->Subscribe(callback);
 			//BoxCollisionEventMap[entity->id] = newEvent;
-			BoxCollisionEventMap.insert(std::pair<EntityID, BoxCollisionEvent*>(entity->id, newEvent));
+			BoxCollisionEventMap.insert(std::pair<Entity, BoxCollisionEvent*>(entity, newEvent));
 		}
 		else
 		{
@@ -95,7 +95,7 @@ void BoxColliderSystem::Subscribe(Entity* entity, BoxCollisionEventListener call
 	}
 	else
 	{
-		throw std::runtime_error("Entity " + entity->name + " can't subscribe to BoxCollision events without a BoxCollider component!");
+		throw std::runtime_error("Entity " + std::to_string(entity) + " can't subscribe to BoxCollision events without a BoxCollider component!");
 		return;
 	}
 }

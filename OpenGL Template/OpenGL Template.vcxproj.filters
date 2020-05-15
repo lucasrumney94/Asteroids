@@ -92,9 +92,6 @@
     <ClInclude Include="Component.hpp">
       <Filter>Source Files\Components</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.hpp">
-      <Filter>Source Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="BoxColliderSystem.hpp">
       <Filter>Source Files\Systems</Filter>
     </ClInclude>

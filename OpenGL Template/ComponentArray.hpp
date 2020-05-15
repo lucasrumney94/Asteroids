@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Types.hpp"
-#include "Entity.hpp"
 #include "Coordinator.hpp"
 #include <array>
 #include <cassert>
@@ -12,7 +11,7 @@ class IComponentArray
 {
 public:
 	virtual ~IComponentArray() = default;
-	virtual void EntityDestroyed(EntityID entity) = 0;
+	virtual void EntityDestroyed(Entity entity) = 0;
 };
 
 
@@ -22,12 +21,12 @@ class ComponentArray : public IComponentArray
 
 private:
 	std::array<T, MAX_ENTITIES> mComponentArray{};
-	std::unordered_map<EntityID, size_t> mEntityToIndexMap{};
-	std::unordered_map<size_t, EntityID> mIndexToEntityMap{};
+	std::unordered_map<Entity, size_t> mEntityToIndexMap{};
+	std::unordered_map<size_t, Entity> mIndexToEntityMap{};
 	size_t mSize{};
 
 public:
-	void InsertData(EntityID entity, T component)
+	void InsertData(Entity entity, T component)
 	{
 		assert(mEntityToIndexMap.find(entity) == mEntityToIndexMap.end() && "Component added to same entity more than once.");
 
@@ -39,7 +38,7 @@ public:
 		++mSize;
 	}
 
-	void RemoveData(EntityID entity)
+	void RemoveData(Entity entity)
 	{
 		assert(mEntityToIndexMap.find(entity) != mEntityToIndexMap.end() && "Removing non-existent component.");
 
@@ -49,7 +48,7 @@ public:
 		mComponentArray[indexOfRemovedEntity] = mComponentArray[indexOfLastElement];
 
 		// Update map to point to moved spot
-		EntityID entityOfLastElement = mIndexToEntityMap[indexOfLastElement];
+		Entity entityOfLastElement = mIndexToEntityMap[indexOfLastElement];
 		mEntityToIndexMap[entityOfLastElement] = indexOfRemovedEntity;
 		mIndexToEntityMap[indexOfRemovedEntity] = entityOfLastElement;
 
@@ -59,12 +58,12 @@ public:
 		--mSize;
 	}
 
-	bool HasData(EntityID entity)
+	bool HasData(Entity entity)
 	{
 		return mEntityToIndexMap.find(entity) != mEntityToIndexMap.end();
 	}
 
-	T& GetData(EntityID entity)
+	T& GetData(Entity entity)
 	{
 		// Check if entity does not exist in entity to index map (find will return an iterator past the bounds of the list if not found)
 		if (mEntityToIndexMap.find(entity) == mEntityToIndexMap.end())
@@ -75,7 +74,7 @@ public:
 		return mComponentArray[mEntityToIndexMap[entity]];
 	}
 
-	void EntityDestroyed(EntityID entity) override
+	void EntityDestroyed(Entity entity) override
 	{
 		if (mEntityToIndexMap.find(entity) != mEntityToIndexMap.end())
 		{

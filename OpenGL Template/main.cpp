@@ -40,8 +40,9 @@ void init(GLFWwindow* window)
 	glfwSetWindowSizeCallback(window, window_size_callback);
 }
 
-void TestCollisionCallback(Entity* owner, Entity* other) {
-	std::cout << owner->name << " collided with: "<< other->name << std::endl;
+void TestCollisionCallback(Entity owner, Entity other) {
+	// TODO: Find another way of identifing entities now that they are an alias for a uint
+	std::cout << "Entity " << owner << " collided with entity " << other << std::endl;
 	/*Transform* ownerTransform = &gCoordinator.GetComponent<Transform>(owner);
 	if (owner->name == "cube")
 	{
@@ -94,13 +95,13 @@ int main(void) {
 	Transform pyramidTransform = Transform();
 	pyramidTransform.SetPosition(0.0f, 2.0f, 0.0f);
 
-	Entity* cube = gCoordinator.CreateEntity("cube");
+	Entity cube = gCoordinator.CreateEntity();
 	gCoordinator.AddComponent<Transform>(
 		cube,
 		cubeTransform
 		);
 
-	Entity* pyramid = gCoordinator.CreateEntity("pyramid");
+	Entity pyramid = gCoordinator.CreateEntity();
 	gCoordinator.AddComponent<Transform>(
 		pyramid,
 		pyramidTransform
