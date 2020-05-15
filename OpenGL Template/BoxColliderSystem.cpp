@@ -18,7 +18,9 @@ void BoxColliderSystem::Init() {
 
 
 void BoxColliderSystem::Update() {
+	std::list<std::pair<Entity, Entity>> collisions{};
 
+	// Detect collisions
 	for (auto const& owner : mEntities)
 	{
 		for (auto const& other : mEntities)
@@ -29,20 +31,26 @@ void BoxColliderSystem::Update() {
 			}
 
 			if (checkOverlap(owner, other)) {
-				std::map<Entity, BoxCollisionEvent*>::iterator entry = BoxCollisionEventMap.find(owner);
-				// If first entity exists in event map
-				if (entry != BoxCollisionEventMap.end())
-				{
-					// Raise event
-					// TODO: Figure out if we need to raise events on both owner and other at the same time, to
-					// prevent the issue where owner moves or is destroyed immediately, preventing a collision 
-					// from being detected on the current other later in the loop
-					entry->second->RaiseBoxCollisionEvent(owner, other);
-				}
+				// Add collision to list and resolve later
+				collisions.push_back({ owner, other });
 			}
 		}
 	}
-	//std::cout << "collisions: " << collisions << std::endl;
+
+	// Resolve collisions
+	for (auto collision : collisions)
+	{
+		Entity owner = collision.first;
+		Entity other = collision.second;
+
+		std::map<Entity, BoxCollisionEvent*>::iterator entry = BoxCollisionEventMap.find(owner);
+		// If first entity exists in event map
+		if (entry != BoxCollisionEventMap.end())
+		{
+			// Raise event
+			entry->second->RaiseBoxCollisionEvent(owner, other);
+		}
+	}
 }
 
 bool BoxColliderSystem::checkOverlap(Entity firstEntity, Entity secondEntity) {
