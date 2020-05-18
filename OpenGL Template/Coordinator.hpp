@@ -42,6 +42,10 @@ public:
 		mSystemManager->EntityDestroyed(entity);
 	}
 
+	bool EntityExists(Entity entity)
+	{
+
+	}
 
 	// Component methods
 	template<typename T>
@@ -92,12 +96,17 @@ public:
 		return mComponentManager->HasComponent<T>(entity);
 	}
 
+	// TODO: Find a way to return a value corresponding to null if the given entity doesn't have a component of type T
+	// This could take the form of a static instance of component?
 	template<typename T>
 	T& GetComponent(Entity entity)
 	{
 		try
 		{
-			return mComponentManager->GetComponent<T>(entity);
+			if (HasComponent<T>(entity))
+			{
+				return mComponentManager->GetComponent<T>(entity);
+			}
 		}
 		catch (...)
 		{

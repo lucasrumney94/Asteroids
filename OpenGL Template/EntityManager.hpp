@@ -40,6 +40,12 @@ public:
 		--mLivingEntityCount;
 	}
 
+	bool EntityExists(Entity entity)
+	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
+
+	}
+
 	void SetSignature(Entity entity, Signature signature)
 	{
 		assert(entity < MAX_ENTITIES && "Entity out of range.");
