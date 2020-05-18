@@ -57,7 +57,9 @@ int main(void) {
 	}
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	//glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
 	GLFWwindow* window = glfwCreateWindow(600, 600, "Asteroids", NULL, NULL);
+	//glfwSetWindowPos(window, 200, 100);
 	glfwMakeContextCurrent(window);
 	if (glewInit() != GLEW_OK) {
 		exit(EXIT_FAILURE);
