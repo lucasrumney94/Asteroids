@@ -5,13 +5,14 @@
 #include <any>
 #include <memory>
 #include <unordered_map>
+#include <typeinfo>
 
 class ComponentManager
 {
 private:
 	std::unordered_map<const char*, ComponentType> mComponentTypes{};
 	std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrays{};
-	ComponentType mNextComponentType{}; // TODO: {}?
+	ComponentType mNextComponentType{};
 
 	template<typename T>
 	std::shared_ptr<ComponentArray<T>> GetComponentArray()
@@ -47,24 +48,39 @@ public:
 	}
 
 	template<typename T>
-	void AddComponent(EntityID entity, T component)
+	void AddComponent(Entity entity, T component)
 	{
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
 
 	template<typename T>
-	void RemoveComponent(EntityID entity)
+	void RemoveComponent(Entity entity)
 	{
 		GetComponentArray<T>()->RemoveData(entity);
 	}
 
 	template<typename T>
-	T& GetComponent(EntityID entity)
+	bool HasComponent(Entity entity)
 	{
-		return GetComponentArray<T>()->GetData(entity);
+		return GetComponentArray<T>()->HasData(entity);
 	}
 
-	void EntityDestroyed(EntityID entity)
+	template<typename T>
+	T& GetComponent(Entity entity)
+	{
+		try
+		{
+			return GetComponentArray<T>()->GetData(entity);
+		}
+		catch (...)
+		{
+			throw;
+		}
+		// we can try it with and without
+		//return GetComponentArray<T>()->GetData(entity);
+	}
+
+	void EntityDestroyed(Entity entity)
 	{
 		for (auto const& pair : mComponentArrays)
 		{

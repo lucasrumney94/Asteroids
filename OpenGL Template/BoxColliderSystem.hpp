@@ -15,25 +15,29 @@
 #include <glm\gtx\quaternion.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <cmath>
+#include <map>
+#include <iterator>
 
-typedef void (*BoxCollisionEventListener) (Entity*, Entity*);
+typedef void (*BoxCollisionEventListener) (Entity, Entity);
 
 class BoxCollisionEvent : public Event<BoxCollisionEventListener>
 {
 
 public:
-	void RaiseBoxCollisionEvent(Entity* owner, Entity* other);
+	void RaiseBoxCollisionEvent(Entity owner, Entity other);
 
 };
 
 class BoxColliderSystem : public System
 {
 public:
-	BoxCollisionEvent* boxCollisionEvent;
-
 	bool DrawBoundingBox; //maybe for debug purposes.
 
 	void Init() override;
 	void Update() override;
-	bool checkOverlap(Entity*, Entity*);
+	bool checkOverlap(Entity, Entity);
+	void Subscribe(Entity entity, BoxCollisionEventListener callback);
+
+private:
+	std::map<Entity, BoxCollisionEvent*> BoxCollisionEventMap{};
 };

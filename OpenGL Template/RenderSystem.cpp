@@ -9,7 +9,7 @@ void RenderSystem::SetProjection(glm::mat4 newProjection)
 
 void RenderSystem::Init()
 {
-	mCamera = gCoordinator.CreateEntity("camera");
+	mCamera = gCoordinator.CreateEntity();
 
 	Transform camTransform = Transform();
 	camTransform.SetPosition(0.0f, 0.0f, 8.0f);
