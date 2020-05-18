@@ -47,7 +47,7 @@ public:
 		}
 	}
 
-	void EntityDestroyed(Entity* entity)
+	void EntityDestroyed(Entity entity)
 	{
 		for (auto const& pair : mSystems)
 		{
@@ -58,7 +58,7 @@ public:
 		}
 	}
 
-	void EntitySignatureChanged(Entity* entity, Signature entitySignature)
+	void EntitySignatureChanged(Entity entity, Signature entitySignature)
 	{
 		for (auto const& pair : mSystems)
 		{
@@ -77,7 +77,7 @@ public:
 		}
 	}
 
-	void EntityEnabled(Entity* entity, Signature entitySignature)
+	void EntityEnabled(Entity entity, Signature entitySignature)
 	{
 		for (auto const& pair: mSystems)
 		{
@@ -91,7 +91,7 @@ public:
 		}
 	}
 
-	void EntityDisabled(Entity* entity, Signature entitySignature)
+	void EntityDisabled(Entity entity, Signature entitySignature)
 	{
 		for (auto const& pair : mSystems)
 		{

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Types.hpp"
-#include "Entity.hpp"
 #include <queue>
 #include <array>
 #include <cassert>
@@ -9,58 +8,55 @@
 class EntityManager
 {
 private:
-	std::queue<EntityID> mAvailableEntities{};
-	std::array<Entity*, MAX_ENTITIES> mEntities{};
+	std::queue<Entity> mAvailableEntities{};
 	std::array<Signature, MAX_ENTITIES> mSignatures{};
 	uint32_t mLivingEntityCount{};
 
 public:
 	EntityManager() {
-		for (EntityID entityid = 0; entityid < MAX_ENTITIES; ++entityid)
+		for (Entity Entity = 0; Entity < MAX_ENTITIES; ++Entity)
 		{
-			mAvailableEntities.push(entityid);
+			mAvailableEntities.push(Entity);
 		}
 	}
 
-	Entity* CreateEntity(std::string name)
+	Entity CreateEntity()
 	{
 		assert(mLivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
 
-		EntityID id = mAvailableEntities.front();
-		Entity* newEntity = new Entity{ name, id };
-		mEntities[id] = newEntity;
+		Entity id = mAvailableEntities.front();
 		mAvailableEntities.pop();
 		++mLivingEntityCount;
 
-		return newEntity;
+		return id;
 	}
 
-	void DestroyEntity(EntityID id)
+	void DestroyEntity(Entity entity)
 	{
-		assert(id < MAX_ENTITIES && "Entity out of range.");
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
 
-		delete(mEntities[id]);
-		mSignatures[id].reset();
-		mAvailableEntities.push(id);
+		mSignatures[entity].reset();
+		mAvailableEntities.push(entity);
 		--mLivingEntityCount;
 	}
 
-	Entity* GetEntityByID(EntityID id)
+	bool EntityExists(Entity entity)
 	{
-		return mEntities[id];
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
+
 	}
 
-	void SetSignature(EntityID id, Signature signature)
+	void SetSignature(Entity entity, Signature signature)
 	{
-		assert(id < MAX_ENTITIES && "Entity out of range.");
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
 
-		mSignatures[id] = signature;
+		mSignatures[entity] = signature;
 	}
 
-	Signature GetSignature(EntityID id)
+	Signature GetSignature(Entity entity)
 	{
-		assert(id < MAX_ENTITIES && "Entity out of range.");
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
 
-		return mSignatures[id];
+		return mSignatures[entity];
 	}
 };

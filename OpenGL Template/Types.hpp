@@ -4,8 +4,8 @@
 #include <bitset>
 
 // Entity Type Alias
-using EntityID = std::uint32_t;
-const EntityID MAX_ENTITIES = 5000;
+using Entity = std::uint32_t;
+const Entity MAX_ENTITIES = 5000;
 
 // Component Type Alias
 using ComponentType = std::uint8_t;

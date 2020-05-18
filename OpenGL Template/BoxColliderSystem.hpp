@@ -18,13 +18,13 @@
 #include <map>
 #include <iterator>
 
-typedef void (*BoxCollisionEventListener) (Entity*, Entity*);
+typedef void (*BoxCollisionEventListener) (Entity, Entity);
 
 class BoxCollisionEvent : public Event<BoxCollisionEventListener>
 {
 
 public:
-	void RaiseBoxCollisionEvent(Entity* owner, Entity* other);
+	void RaiseBoxCollisionEvent(Entity owner, Entity other);
 
 };
 
@@ -35,9 +35,9 @@ public:
 
 	void Init() override;
 	void Update() override;
-	bool checkOverlap(Entity*, Entity*);
-	void Subscribe(Entity* entity, BoxCollisionEventListener callback);
+	bool checkOverlap(Entity, Entity);
+	void Subscribe(Entity entity, BoxCollisionEventListener callback);
 
 private:
-	std::map<EntityID, BoxCollisionEvent*> BoxCollisionEventMap{};
+	std::map<Entity, BoxCollisionEvent*> BoxCollisionEventMap{};
 };

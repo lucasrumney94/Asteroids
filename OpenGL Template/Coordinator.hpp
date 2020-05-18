@@ -28,20 +28,24 @@ public:
 
 
 	// Entity methods
-	Entity* CreateEntity(std::string name)
+	Entity CreateEntity()
 	{
-		return mEntityManager->CreateEntity(name);
+		return mEntityManager->CreateEntity();
 	}
 
-	void DestroyEntity(Entity* entity)
+	void DestroyEntity(Entity entity)
 	{
-		mEntityManager->DestroyEntity(entity->id);
+		mEntityManager->DestroyEntity(entity);
 
-		mComponentManager->EntityDestroyed(entity->id);
+		mComponentManager->EntityDestroyed(entity);
 
 		mSystemManager->EntityDestroyed(entity);
 	}
 
+	bool EntityExists(Entity entity)
+	{
+
+	}
 
 	// Component methods
 	template<typename T>
@@ -51,62 +55,62 @@ public:
 	}
 
 	template<typename T>
-	void AddComponent(Entity* entity, T component)
+	void AddComponent(Entity entity, T component)
 	{
-		mComponentManager->AddComponent<T>(entity->id, component);
+		mComponentManager->AddComponent<T>(entity, component);
 
-		auto signature = mEntityManager->GetSignature(entity->id);
+		auto signature = mEntityManager->GetSignature(entity);
 		signature.set(mComponentManager->GetComponentType<T>(), true);
-		mEntityManager->SetSignature(entity->id, signature);
+		mEntityManager->SetSignature(entity, signature);
 
 		mSystemManager->EntitySignatureChanged(entity, signature);
 	}
 
 	template<typename T>
-	void RemoveComponent(Entity* entity)
+	void RemoveComponent(Entity entity)
 	{
-		mComponentManager->RemoveComponent<T>(entity->id);
+		mComponentManager->RemoveComponent<T>(entity);
 
-		auto signature = mEntityManager->GetSignature(entity->id);
+		auto signature = mEntityManager->GetSignature(entity);
 		signature.set(mComponentManager->GetComponentType<T>(), false);
-		mEntityManager->SetSignature(entity->id, signature);
+		mEntityManager->SetSignature(entity, signature);
 
 		mSystemManager->EntitySignatureChanged(entity, signature);
 	}
 
-	void EnableEntity(Entity* entity)
+	void EnableEntity(Entity entity)
 	{
-		auto signature = mEntityManager->GetSignature(entity->id);
+		auto signature = mEntityManager->GetSignature(entity);
 		mSystemManager->EntityEnabled(entity, signature);
 	}
 
-	void DisableEntity(Entity* entity)
+	void DisableEntity(Entity entity)
 	{
-		auto signature = mEntityManager->GetSignature(entity->id);
+		auto signature = mEntityManager->GetSignature(entity);
 		mSystemManager->EntityDisabled(entity, signature);
 	}
 
-	Entity* GetEntityByID(EntityID id)
+	template<typename T>
+	bool HasComponent(Entity entity)
 	{
-		return mEntityManager->GetEntityByID(id);
+		return mComponentManager->HasComponent<T>(entity);
 	}
 
+	// TODO: Find a way to return a value corresponding to null if the given entity doesn't have a component of type T
+	// This could take the form of a static instance of component?
 	template<typename T>
-	bool HasComponent(Entity* entity)
-	{
-		return mComponentManager->HasComponent<T>(entity->id);
-	}
-
-	template<typename T>
-	T& GetComponent(Entity* entity)
+	T& GetComponent(Entity entity)
 	{
 		try
 		{
-			return mComponentManager->GetComponent<T>(entity->id);
+			if (HasComponent<T>(entity))
+			{
+				return mComponentManager->GetComponent<T>(entity);
+			}
 		}
 		catch (...)
 		{
-			std::cout << "Tried to retrieve non-existent component " << typeid(T).name() << " on entity " << entity->name << std::endl;
+			std::cout << "Tried to retrieve non-existent component " << typeid(T).name() << " on entity " << entity << std::endl;
 			throw;
 		}
 	}

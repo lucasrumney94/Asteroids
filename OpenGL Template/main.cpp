@@ -16,6 +16,7 @@
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <iostream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -40,13 +41,11 @@ void init(GLFWwindow* window)
 	glfwSetWindowSizeCallback(window, window_size_callback);
 }
 
-void TestCollisionCallback(Entity* owner, Entity* other) {
-	std::cout << owner->name << " collided with: "<< other->name << std::endl;
-	/*Transform* ownerTransform = &gCoordinator.GetComponent<Transform>(owner);
-	if (owner->name == "cube")
-	{
-		ownerTransform->Translate(glm::vec3(0.0f, -1.0f, 0.0f));
-	}*/
+void TestCollisionCallback(Entity owner, Entity other) {
+	// TODO: Find another way of identifing entities now that they are an alias for a uint
+	std::cout << "Entity " << owner << " collided with entity " << other << std::endl;
+	//gCoordinator.DestroyEntity(owner);
+	gCoordinator.DestroyEntity(other);
 }
 
 int main(void) {
@@ -55,7 +54,7 @@ int main(void) {
 	}
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	GLFWwindow* window = glfwCreateWindow(600, 600, "Chapter 2 - program 1", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(600, 600, "Asteroids", NULL, NULL);
 	glfwMakeContextCurrent(window);
 	if (glewInit() != GLEW_OK) {
 		exit(EXIT_FAILURE);
@@ -94,13 +93,13 @@ int main(void) {
 	Transform pyramidTransform = Transform();
 	pyramidTransform.SetPosition(0.0f, 2.0f, 0.0f);
 
-	Entity* cube = gCoordinator.CreateEntity("cube");
+	Entity cube = gCoordinator.CreateEntity();
 	gCoordinator.AddComponent<Transform>(
 		cube,
 		cubeTransform
 		);
 
-	Entity* pyramid = gCoordinator.CreateEntity("pyramid");
+	Entity pyramid = gCoordinator.CreateEntity();
 	gCoordinator.AddComponent<Transform>(
 		pyramid,
 		pyramidTransform
@@ -197,7 +196,7 @@ int main(void) {
 		pyramidCollider
 		);
 
-	boxColliderSystem->Subscribe(pyramid, TestCollisionCallback);
+	//boxColliderSystem->Subscribe(pyramid, TestCollisionCallback);
 
 	Transform* camTrans = &gCoordinator.GetComponent<Transform>(renderSystem->mCamera);
 	camTrans->Translate(glm::vec3(0, 0, 15));
@@ -229,10 +228,18 @@ int main(void) {
 
 		float sinTime = sin(glfwGetTime());
 		float cosTime = cos(glfwGetTime());
-		Transform* CubeTrans = &gCoordinator.GetComponent<Transform>(cube);
-		CubeTrans->Translate(glm::vec3(cosTime * 0.03f, sinTime * 0.03f, 0.0f));
-		//CubeTrans->SetRotationEulerAngles(glm::vec3(0.0f, glm::pi<float>() / 4.0f, 0.0f));
-		CubeTrans->RotateByDegrees(2.0f, glm::vec3(sinTime, cosTime, 0.0f));
+		// TODO: Find a way to handle getting a non-existant component without try-catch blocks
+		try
+		{
+			Transform* CubeTrans = &gCoordinator.GetComponent<Transform>(cube);
+			CubeTrans->Translate(glm::vec3(cosTime * 0.03f, sinTime * 0.03f, 0.0f));
+			//CubeTrans->SetRotationEulerAngles(glm::vec3(0.0f, glm::pi<float>() / 4.0f, 0.0f));
+			CubeTrans->RotateByDegrees(2.0f, glm::vec3(sinTime, cosTime, 0.0f));
+		}
+		catch (...)
+		{
+
+		}
 	}
 
 	glfwDestroyWindow(window);

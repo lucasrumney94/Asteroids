@@ -12,7 +12,7 @@ class ComponentManager
 private:
 	std::unordered_map<const char*, ComponentType> mComponentTypes{};
 	std::unordered_map<const char*, std::shared_ptr<IComponentArray>> mComponentArrays{};
-	ComponentType mNextComponentType{}; // TODO: {}?
+	ComponentType mNextComponentType{};
 
 	template<typename T>
 	std::shared_ptr<ComponentArray<T>> GetComponentArray()
@@ -48,25 +48,25 @@ public:
 	}
 
 	template<typename T>
-	void AddComponent(EntityID entity, T component)
+	void AddComponent(Entity entity, T component)
 	{
 		GetComponentArray<T>()->InsertData(entity, component);
 	}
 
 	template<typename T>
-	void RemoveComponent(EntityID entity)
+	void RemoveComponent(Entity entity)
 	{
 		GetComponentArray<T>()->RemoveData(entity);
 	}
 
 	template<typename T>
-	bool HasComponent(EntityID entity)
+	bool HasComponent(Entity entity)
 	{
 		return GetComponentArray<T>()->HasData(entity);
 	}
 
 	template<typename T>
-	T& GetComponent(EntityID entity)
+	T& GetComponent(Entity entity)
 	{
 		try
 		{
@@ -80,7 +80,7 @@ public:
 		//return GetComponentArray<T>()->GetData(entity);
 	}
 
-	void EntityDestroyed(EntityID entity)
+	void EntityDestroyed(Entity entity)
 	{
 		for (auto const& pair : mComponentArrays)
 		{
