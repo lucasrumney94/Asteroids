@@ -15,8 +15,8 @@
 #include "Event.hpp"
 
 #include "main.h"
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <iostream>
 #include <cstdlib>
 
@@ -65,7 +65,7 @@ int main(void) {
 	glfwSwapInterval(1);
 
 	init(window);
-	gCoordinator.Init();
+	gCoordinator.Init(window);
 
 	gCoordinator.RegisterComponent<Camera>();
 	gCoordinator.RegisterComponent<Transform>();
