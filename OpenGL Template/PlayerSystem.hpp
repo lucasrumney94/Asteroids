@@ -15,6 +15,8 @@ private:
 	static void PlayerMovementCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 public:
 	static bool moveForward;
+	static bool rotateLeft;
+	static bool rotateRight;
 	void Init() override;
 	void Update() override;
 };

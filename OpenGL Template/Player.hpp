@@ -7,5 +7,8 @@ struct Player : Component
 private:
 
 public:
-	float speed = 1.0f;
+	// Units per frame
+	float speed = 0.08f;
+	// Radians per frame
+	float turnSpeed = 0.04;
 };

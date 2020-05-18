@@ -211,7 +211,7 @@ int main(void) {
 	//boxColliderSystem->Subscribe(player, TestCollisionCallback);
 
 	Player playerComponent = Player();
-	playerComponent.speed = 10.0f;
+	//playerComponent.speed = 10.0f;
 
 	gCoordinator.AddComponent(player, playerComponent);
 
