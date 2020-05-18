@@ -18,6 +18,6 @@ public:
 	static bool rotateLeft;
 	static bool rotateRight;
 	void Init() override;
-	void Update() override;
+	void Update(float deltaTime) override;
 };
 

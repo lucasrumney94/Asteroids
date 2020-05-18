@@ -220,10 +220,16 @@ int main(void) {
 
 	int frame = 0;
 
+	double previousTime = glfwGetTime();
+
 	while (!glfwWindowShouldClose(window)) {
-		
+		// Calculate delta time between the previous and current frame
+		double currentTime = glfwGetTime();
+		float deltaTime = static_cast<float>(currentTime - previousTime);
+		deltaTime = clamp(deltaTime, 0.0f, 0.1f);
+		previousTime = currentTime;
 		// TODO: Add universal update for systems to the system manager
-		gCoordinator.UpdateSystems();
+		gCoordinator.UpdateSystems(deltaTime);;
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

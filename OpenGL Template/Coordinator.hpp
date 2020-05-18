@@ -148,7 +148,7 @@ public:
 		mSystemManager->InitSystems();
 	}
 
-	void UpdateSystems() {
-		mSystemManager->UpdateSystems();
+	void UpdateSystems(float deltaTime) {
+		mSystemManager->UpdateSystems(deltaTime);
 	}
 };

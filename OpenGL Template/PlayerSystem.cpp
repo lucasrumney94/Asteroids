@@ -45,25 +45,29 @@ void PlayerSystem::Init()
 	glfwSetKeyCallback(gCoordinator.GetWindow(), PlayerMovementCallback);
 }
 
-void PlayerSystem::Update()
+void PlayerSystem::Update(float deltaTime)
 {
 	for (auto const& entity : mEntities)
 	{
 		auto& transform = gCoordinator.GetComponent<Transform>(entity);
 		auto& player = gCoordinator.GetComponent<Player>(entity);
+
+		float scaledSpeed = player.speed * deltaTime;
+		float scaledTurnSpeed = player.turnSpeed * deltaTime;
+
 		if (moveForward)
 		{
 			transform.Translate(glm::vec3(
-				player.speed * cos(transform.GetRotationEulerAngles().z + glm::pi<float>() / 2.0f),
-				player.speed * sin(transform.GetRotationEulerAngles().z + glm::pi<float>() / 2.0f),
+				scaledSpeed * cos(transform.GetRotationEulerAngles().z + glm::pi<float>() / 2.0f),
+				scaledSpeed * sin(transform.GetRotationEulerAngles().z + glm::pi<float>() / 2.0f),
 				0.0f)
 			);
 		}
 		if (rotateLeft == GLFW_PRESS) {
-			transform.RotateByRadians(player.turnSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
+			transform.RotateByRadians(scaledTurnSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
 		}
 		if (rotateRight) {
-			transform.RotateByRadians(-player.turnSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
+			transform.RotateByRadians(-scaledTurnSpeed, glm::vec3(0.0f, 0.0f, 1.0f));
 		}
 	}
 }
