@@ -9,19 +9,21 @@ A tribute to the game _Asteroids (1979)_ in our Game Engine. Written in C++ usin
 ## Build
 To build this project in Visual Studio 2019:
 
-  1: Open the Property Manager window under View -> Other Windows
+  1: Open the Property Manager window under `View -> Other Windows`
   
-  2: Expand the root item and right-click on Debug|Win32 -> Add Existing Property Sheet
+  2: Expand the root item and right-click on `Debug|Win32 -> Add Existing Property Sheet`
   
-  3: Select the OpenGL-PropertySheet.props file in the project directory
+  3: Select the `OpenGL-PropertySheet.props` file in the project directory
   
-  4: Do the same thing for Release|Win32
+  4: Repeat this process for `Release|Win32`
   
-If you get the warning:
+### Build Warnings
+  
+If you get the following warning:
 
-  warning LNK4098: defaultlib \<library\> conflicts with use of other libs; use /NODEFAULTLIB:library
+  `warning LNK4098: defaultlib \<library\> conflicts with use of other libs; use /NODEFAULTLIB:library`
   
-Open the project properties window, go to Linker -> Input -> Ignore Specific Default Libraries and add the conflicting library
+Open the project properties window, go to `Linker -> Input -> Ignore Specific Default Libraries` and add the conflicting library.
 
 ## Authors
 Hardy Whitney
