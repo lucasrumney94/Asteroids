@@ -1,6 +1,8 @@
 # Asteroids
 A tribute to the game _Asteroids (1979)_ in our Game Engine written in C++ using GLFW, GLM, and GLEW.
 
+[![Generic badge](https://img.shields.io/badge/Status-WIP-Yellow.svg)](https://shields.io/)
+
 ![ProjectGif](/images/shootingAsteroids.gif)
 
 
