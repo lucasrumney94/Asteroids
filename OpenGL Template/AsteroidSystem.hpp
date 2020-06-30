@@ -9,6 +9,7 @@
 
 #include "System.hpp"
 #include "Coordinator.hpp"
+#include "ShaderUtils.h"
 
 #include <cmath>
 
@@ -18,5 +19,5 @@ public:
 	void Init() override;
 	void Update(float deltaTime) override;
 	static void CollisionCallback(Entity owner, Entity other);
-
+	Entity PlayerEntity;
 };

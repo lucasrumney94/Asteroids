@@ -91,7 +91,6 @@ void PlayerSystem::Update(float deltaTime)
 			FireBullet(transform);
 			player.fireTimer = 0.0f;
 		}
-
 	}
 }
 
@@ -118,7 +117,7 @@ void PlayerSystem::FireBullet(Transform& transform)
 
 	// Setup Renderable
 	Renderable bulletRenderable = Renderable();
-	bulletRenderable.VAO = MeshUtils::LoadFromArray(pyramidVertexPositions, 54);
+	bulletRenderable.VAO = MeshUtils::LoadFromArray(bulletVertexPositions, 54);
 	bulletRenderable.windingOrder = GL_CCW;
 	bulletRenderable.renderingProgram = ShaderUtils::ShaderMap["Bullet"];
 	bulletRenderable.tint = glm::vec3(.6, .6, .6);

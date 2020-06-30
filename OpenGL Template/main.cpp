@@ -164,6 +164,8 @@ int main(void) {
 		playerTransform
 		);
 
+	asteroidSystem->PlayerEntity = player;
+
 	Renderable cubeRenderable = Renderable();
 	cubeRenderable.VAO = MeshUtils::LoadFromArray(cubeVertexPositions, 108);
 	cubeRenderable.windingOrder = GL_CW;
@@ -175,10 +177,10 @@ int main(void) {
 		);
 
 	Renderable playerRenderable = Renderable();
-	playerRenderable.VAO = MeshUtils::LoadFromArray(pyramidVertexPositions, 54);
+	playerRenderable.VAO = MeshUtils::LoadFromArray(playerVertexPositions, 54);
 	playerRenderable.windingOrder = GL_CCW;
 	playerRenderable.renderingProgram = ShaderUtils::ShaderMap["Player"];
-	playerRenderable.tint = glm::vec3(0., 0., .5);
+	playerRenderable.tint = glm::vec3(0., .7, 0.);
 
 	gCoordinator.AddComponent<Renderable>(
 		player,

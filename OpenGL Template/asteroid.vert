@@ -1,4 +1,6 @@
-#version 460
+#version 430
+
+#define VERTEX_DRIFT .8
 
 in int gl_VertexID;
 in int gl_DrawID;
@@ -18,10 +20,9 @@ float rand(float x)
 
 void main(void)
 {
-	float magnitude = .5;
 	float posHash = position.x + position.y + position.z;
-	vec3 pos = position + magnitude * (rand(posHash + objectId) * 2. - 1.);
+	vec3 pos = position + VERTEX_DRIFT * (rand(posHash + objectId) * 2. - 1.);
 	gl_Position = proj_matrix * mv_matrix * vec4(pos,1.0);
 	varyingColor = vec4(vec3(rand(floor(gl_VertexID / 3))), 1.) + 0.1;
 	//varyingColor = vec4(position,1.0)*0.5 + vec4(0.5, 0.5, 0.5, 0.5);
-} 
+}

@@ -166,6 +166,12 @@
     <None Include="default.frag">
       <Filter>Source Files\Shaders</Filter>
     </None>
+    <None Include="player.geo">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="asteroid.geo">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\checkerBoard.png">
