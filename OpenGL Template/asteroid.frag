@@ -1,11 +1,10 @@
 #version 430
 
-#define LIGHT_AMBIENT vec3(.5);
+#define LIGHT_AMBIENT vec3(.7);
 #define LIGHT_DIFFUSE vec3(.2, 1., .2)
-#define FALLOFF 15.
+#define FALLOFF 20.
 #define DIFFUSE_BLEEDOVER .5
 
-in vec4 varyingColor;
 in vec3 position;
 in vec3 normal;
 out vec4 color;
