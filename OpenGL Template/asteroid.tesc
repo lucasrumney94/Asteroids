@@ -8,8 +8,6 @@ out vec3 tesPos[];
 
 void main(void)
 {
-	
-
 	tesPos[gl_InvocationID] = tcsPos[gl_InvocationID];
 
 	gl_TessLevelOuter[0] = 4.0f;
@@ -17,5 +15,4 @@ void main(void)
 	gl_TessLevelOuter[2] = 4.0f;
 
 	gl_TessLevelInner[0] = 4.0f;
-
 }

@@ -57,7 +57,7 @@ void AsteroidSpawnerSystem::SpawnAsteroid(glm::vec3 position, glm::vec3 initialV
 	asteroidRenderable.windingOrder = GL_CW;
 	asteroidRenderable.primitiveType = GL_PATCHES;
 	asteroidRenderable.renderingProgram = ShaderUtils::ShaderMap["Asteroid"];
-	asteroidRenderable.tint = glm::vec3(.2, .1, 0.);
+	asteroidRenderable.tint = glm::vec3(.4, .4, .4);
 	gCoordinator.AddComponent<Renderable>(
 		asteroid,
 		asteroidRenderable

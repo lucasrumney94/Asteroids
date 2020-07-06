@@ -7,8 +7,11 @@ in vec3 tesPos[];
 layout (triangles, equal_spacing, ccw) in; // TRY BOTH WAYS
 
 uniform mat4 mv_matrix;
+uniform mat4 m_matrix;
 uniform mat4 proj_matrix;
 uniform int objectId;
+
+out vec3 geomWorldPosition;
 
 float rand(float x)
 {
@@ -25,17 +28,18 @@ vec3 GetNormal(vec3 a, vec3 b, vec3 c)
 
 void main()
 {
-	vec3 position = vec3(gl_TessCoord.x) * tesPos[0] + 
+	vec3 modelPosition = vec3(gl_TessCoord.x) * tesPos[0] + 
 		 vec3(gl_TessCoord.y) * tesPos[1] + 
 		 vec3(gl_TessCoord.z) * tesPos[2];
+
+	float posHash = modelPosition.x + modelPosition.y + modelPosition.z;
+
+	// make a sphere
+	modelPosition = normalize(modelPosition);
 	
+	// displacing along normal
+	modelPosition = modelPosition + modelPosition*VERTEX_DRIFT * (rand(posHash + objectId) * 2. - 1.);
 
-	float posHash = position.x + position.y + position.z;
-	position = normalize(position);
-	
-	vec3 normal = position;
-	position = position + position*VERTEX_DRIFT * (rand(posHash + objectId) * 2. - 1.);
-
-	gl_Position = proj_matrix * mv_matrix * vec4(position, 1.0);
-
+	geomWorldPosition = (m_matrix * vec4(modelPosition, 1.0)).xyz;
+	gl_Position = proj_matrix * mv_matrix * vec4(modelPosition, 1.0);
 }
