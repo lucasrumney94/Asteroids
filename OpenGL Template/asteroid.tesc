@@ -12,10 +12,10 @@ void main(void)
 
 	tesPos[gl_InvocationID] = tcsPos[gl_InvocationID];
 
-	gl_TessLevelOuter[0] = 6.0f;
-	gl_TessLevelOuter[1] = 6.0f;
-	gl_TessLevelOuter[2] = 6.0f;
+	gl_TessLevelOuter[0] = 4.0f;
+	gl_TessLevelOuter[1] = 4.0f;
+	gl_TessLevelOuter[2] = 4.0f;
 
-	gl_TessLevelInner[0] = 6.0f;
+	gl_TessLevelInner[0] = 4.0f;
 
 }

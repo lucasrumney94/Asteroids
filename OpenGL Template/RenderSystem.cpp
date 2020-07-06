@@ -71,7 +71,7 @@ void RenderSystem::Update(float deltaTime)
 		glDepthFunc(GL_LEQUAL);
 
 		glBindVertexArray(renderable.VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(renderable.primitiveType, 0, 36);
 		Utils::checkOpenGLError();
 	}
 }

@@ -1,6 +1,6 @@
 #version 430
 
-#define VERTEX_DRIFT .1
+#define VERTEX_DRIFT .0
 
 in int gl_VertexID;
 in int gl_DrawID;

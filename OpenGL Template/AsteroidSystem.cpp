@@ -15,8 +15,8 @@ void AsteroidSystem::Update(float deltaTime)
 {
 	Transform& playerTransform = gCoordinator.GetComponent<Transform>(PlayerEntity);
 	glm::vec3 playerPosition = playerTransform.GetPosition();
-	//GLuint lightPos = glGetUniformLocation(ShaderUtils::ShaderMap["Asteroid"], "lightPos");
-	//glUniform3fv(lightPos, 1, glm::value_ptr(playerPosition));
+	GLuint lightPos = glGetUniformLocation(ShaderUtils::ShaderMap["Asteroid"], "lightPos");
+	glUniform3fv(lightPos, 1, glm::value_ptr(playerPosition));
 
 	for (auto const& entity : mEntities)
 	{

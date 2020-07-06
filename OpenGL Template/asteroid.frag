@@ -1,9 +1,9 @@
 #version 430
 
-#define LIGHT_AMBIENT vec3(.7);
+#define LIGHT_AMBIENT vec3(.8);
 #define LIGHT_DIFFUSE vec3(.2, 1., .2)
-#define FALLOFF 20.
-#define DIFFUSE_BLEEDOVER .5
+#define FALLOFF 10.
+#define DIFFUSE_BLEEDOVER .0
 
 in vec3 position;
 in vec3 normal;
