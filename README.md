@@ -24,7 +24,7 @@ If you get the following warning:
 3. Add the conflicting library to the field
 
 ## Authors
-Hardy Whitney — Lucas Rumney — Cody Stough
+Hardy Whitney — Lucas Rumney
 
 ## Attribution
 
